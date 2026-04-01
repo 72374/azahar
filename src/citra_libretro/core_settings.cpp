@@ -60,6 +60,7 @@ static constexpr const char* use_shader_jit = citra_setting(BaseKeys::use_shader
 static constexpr const char* shaders_accurate_mul = citra_setting(BaseKeys::shaders_accurate_mul);
 static constexpr const char* use_disk_shader_cache = citra_setting(BaseKeys::use_disk_shader_cache);
 static constexpr const char* resolution_factor = citra_setting(BaseKeys::resolution_factor);
+static constexpr const char* scaling_mode = citra_setting(BaseKeys::scaling_mode);
 static constexpr const char* texture_filter = citra_setting(BaseKeys::texture_filter);
 static constexpr const char* texture_sampling = citra_setting(BaseKeys::texture_sampling);
 static constexpr const char* custom_textures = citra_setting(BaseKeys::custom_textures);
@@ -376,6 +377,21 @@ static constexpr retro_core_option_v2_definition option_definitions[] = {
             { nullptr, nullptr }
         },
         "1"
+    },
+    {
+        config::graphics::scaling_mode,
+        "Scaling mode",
+        "Scaling mode",
+        "How to scale the screens of the emulated 3DS to the screen those are displayed on.",
+        nullptr,
+        config::category::graphics,
+        {
+            { "Fit to Screen", "Fit to Screen" },
+            { "Fit to Screen with Integer Scaling", "Fit to Screen with Integer Scaling" },
+            { "Pixel by Pixel", "Pixel by Pixel" },
+            { nullptr, nullptr }
+        },
+        "Fit to Screen"
     },
     {
         config::graphics::texture_filter,
@@ -861,6 +877,17 @@ static void ParseAudioOptions(void) {
     }
 }
 
+static Settings::ScalingMode GetScalingMode(const std::string& name) {
+    if (name == "Fit to Screen")
+        return Settings::ScalingMode::FitToScreen;
+    if (name == "Fit to Screen with Integer Scaling")
+        return Settings::ScalingMode::FitToScreenInteger;
+    if (name == "Pixel by Pixel")
+        return Settings::ScalingMode::PixelByPixel;
+
+    return Settings::ScalingMode::FitToScreen;
+}
+
 static Settings::TextureFilter GetTextureFilter(const std::string& name) {
     if (name == "Anime4K Ultrafast")
         return Settings::TextureFilter::Anime4K;
@@ -924,6 +951,9 @@ static void ParseGraphicsOptions(void) {
 
     auto resolution = LibRetro::FetchVariable(config::graphics::resolution_factor, "1");
     Settings::values.resolution_factor = std::stoi(resolution);
+
+    Settings::values.scaling_mode =
+        GetScalingMode(LibRetro::FetchVariable(config::graphics::scaling_mode, "Fit to Screen"));
 
     Settings::values.texture_filter =
         GetTextureFilter(LibRetro::FetchVariable(config::graphics::texture_filter, "none"));

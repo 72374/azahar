@@ -111,13 +111,56 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="use_integer_scaling">
-        <property name="text">
-         <string>Use Integer Scaling</string>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use Integer Scaling&lt;/p&gt;&lt;p&gt;Enforces that the larger screen in all layouts is an integer scale of the 240px height of the original 3DS screen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
+       <widget class="QWidget" name="widget_scaling_mode" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="scaling_mode_label">
+           <property name="text">
+            <string>Scaling Mode</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="scaling_mode_combobox">
+           <property name="toolTip">
+            <string>
+              &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scaling mode&lt;/p&gt;&lt;p&gt;
+              How to scale the screens of the emulated 3DS to the screen those are displayed on.&lt;/p&gt;&lt;p&gt;
+              Fit to Screen: Fills the screen as much as possible.&lt;/p&gt;&lt;p&gt;
+              Fit to Screen with Integer Scaling: Fills the screen as much as possible by increasing the size to exact multiples of the height of the original 3DS screen.&lt;/p&gt;&lt;p&gt;
+              Pixel by Pixel: One pixel in the game/app, will be one pixel on the screen. To change the size, change the internal resolution.&lt;/p&gt;&lt;p&gt;
+            </string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Fit to Screen</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Fit to Screen with Integer Scaling</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Pixel by Pixel</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -413,6 +456,7 @@
  </widget>
  <tabstops>
   <tabstop>resolution_factor_combobox</tabstop>
+  <tabstop>scaling_mode_combobox</tabstop>
   <tabstop>toggle_linear_filter</tabstop>
   <tabstop>shader_combobox</tabstop>
   <tabstop>texture_filter_combobox</tabstop>
